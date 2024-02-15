@@ -39,3 +39,24 @@ de modo que podemos destacar algumas delas:
   Além dessas tecnologias, estaremos utilizando outras ferramentas para facilitar o desenvolvimento e testes, como por exemplo, Docker, Docker Compose, Testcontainers, Junit, Mockito, entre outros, Lombok etc.
 
 ## Executando o projeto
+
+### Requisitos
+- Instalar o [Docker](https://docs.docker.com/get-docker/)
+- Instalar o [Docker Compose](https://docs.docker.com/compose/install/)
+- Se estiver usando o VsCode, instalar a DevContainer para facilitar o desenvolvimento ou
+- Instalar o [Java 17](https://www.oracle.com/java/technologies/javase-jdk17-downloads.html)
+- Instalar o [Maven](https://maven.apache.org/download.cgi)
+- Instalar o [PostgreSQL](https://www.postgresql.org/download/)
+- Instalar o [Apache Kafka](https://kafka.apache.org/downloads)
+
+### Executando o projeto
+- Rodar o comando `docker-compose up` na raiz do projeto para subir o banco de dados, orquestrador de fila e outras ferramentas necessárias para o desenvolvimento.
+- Se estiver usando o VsCode, digittar command + shift + p e selecionar a opção `Remote-Containers: Reopen in Container` para abrir o projeto na DevContainer.
+
+- Verificando se o banco de dados está rodando, acessar o banco de dados com as seguintes credenciais:
+  - **Host:** localhost
+  - **Port:** 5432
+  - **User:** postgres
+  - **Password:** postgres
+- Verificando se o orquestrador de fila está rodando, acessar o orquestrador de fila com as seguintes credenciais:
+  - **URL:** localhost:9021
