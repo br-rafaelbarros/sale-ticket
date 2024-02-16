@@ -12,30 +12,32 @@ Este diagrama foi criado a partir do site [dbdiagram.io](https://dbdiagram.io/).
 // Docs: https://dbml.dbdiagram.io/docs
 
 Table clients {
-  id integer [primary key]
-  name varchar2
-  email varchar2
-  document_number varchar
-  document_type int [note: '1 = PF, 2 = PJ']
+  id bigint [primary key, increment]
+  name varchar(255) [not null]
+  email varchar(255) [not null]
+  document_number varchar(14) [not null]
+  document_type int [not null, note: '1 = PF, 2 = PJ']
+  created_at timestamp [not null, default: 'CURRENT_TIMESTAMP']
 }
 
 Table orders {
-  id integer [primary key]
-  client_id integer [ref: > clients.id]
-  ticket_id integer [ref: > tickets.id]
-  qty integer
-  data text [note: 'Content of the post']
-  status integer [note: '1=created, 2=paid, 3=canceled, 4=expired']
-  created_at timestamp
+  id bigint [primary key, increment]
+  client_id bigint [ref: > clients.id, not null]
+  ticket_id bigint [ref: > tickets.id, not null]
+  qty integer [not null]
+  total decimal(10,2) [not null]
+  status integer [not null, note: '1=created, 2=paid, 3=canceled, 4=expired']
+  pix_emv varchar(255)
+  created_at timestamp [not null, default: 'CURRENT_TIMESTAMP']
 }
 
 Table tickets {
-  id integer [primary key]
-  title varchar
-  status varchar [note: '1=open to sale, 2=closed to sale']
-  created_at timestamp
-  price decimal
-  qty_to_sale integer
+  id bigint [primary key, increment]
+  title varchar(255) [not null]
+  status integer [not null, note: '1=open to sale, 2=closed to sale']
+  price decimal(10,2) [not null]
+  qty_available integer [not null]
+  created_at timestamp [not null, default: 'CURRENT_TIMESTAMP']
 }
 
   ```
