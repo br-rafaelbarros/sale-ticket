@@ -1,4 +1,4 @@
-package br.com.rafaelbarros.ticket.domain.entities;
+package br.com.rafaelbarros.ticket.domains.entities;
 
 import java.math.BigDecimal;
 

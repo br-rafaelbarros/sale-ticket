@@ -1,6 +1,5 @@
-package br.com.rafaelbarros.ticket.domain.entities;
+package br.com.rafaelbarros.ticket.domains.entities;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -18,29 +17,28 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "tickets")
-public class Ticket {
+@Entity(name = "clients")
+public class Client {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "title", nullable = false, length = 255)
-  private String title;
+  @Column(name = "name", nullable = false, length = 255)
+  private String name;
 
-  @Column(name = "status", nullable = false, length = 1)
-  private Integer status;
+  @Column(name = "email", nullable = false, length = 255)
+  private String email;
 
-  @Column(name = "price", nullable = false, precision = 10, scale = 2)
-  private BigDecimal price;
+  @Column(name = "document_number", nullable = false, length = 14)
+  private String documentNumber;
 
-  @Column(name = "qty_available", nullable = false)
-  private Integer qtyAvailable;
+  @Column(name = "document_type", nullable = false, length = 1)
+  private Integer documentType;
 
   @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
   private String createdAt;
 
-  @OneToMany(mappedBy = "ticket")
+  @OneToMany(mappedBy = "client")
   private List<Order> orders;
-
 }
