@@ -57,7 +57,7 @@ public class TicketServiceTests {
     assert (response.getData().get(0).getTitle().equals("Test"));
     assert (response.getData().get(0).getStatus() == 1);
     assert (response.getData().get(0).getPrice().equals(BigDecimal.valueOf(10.00)));
-    assert (response.getData().get(0).getQty_available() == 10);
+    assert (response.getData().get(0).getQtyAvailable() == 10);
 
   }
 

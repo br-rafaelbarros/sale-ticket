@@ -51,7 +51,7 @@ public class TicketControllerTest {
             .title("Test")
             .status(1)
             .price(BigDecimal.valueOf(10.00))
-            .qty_available(10)
+            .qtyAvailable(10)
             .build()))
         .page(1)
         .size(10)

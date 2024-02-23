@@ -29,7 +29,7 @@ public class TicketServiceImpl implements TicketService {
           .title(ticket.getTitle())
           .status(ticket.getStatus())
           .price(ticket.getPrice())
-          .qty_available(ticket.getQtyAvailable())
+          .qtyAvailable(ticket.getQtyAvailable())
           .build());
     });
 

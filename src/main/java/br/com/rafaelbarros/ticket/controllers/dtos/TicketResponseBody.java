@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -16,5 +18,6 @@ public class TicketResponseBody {
   private String title;
   private Integer status;
   private BigDecimal price;
-  private Integer qty_available;
+  @JsonProperty("qty_available")
+  private Integer qtyAvailable;
 }
