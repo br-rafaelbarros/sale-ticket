@@ -60,3 +60,24 @@ de modo que podemos destacar algumas delas:
   - **Password:** postgres
 - Verificando se o orquestrador de fila está rodando, acessar o orquestrador de fila com as seguintes credenciais:
   - **URL:** localhost:9021
+
+- Rodar o comando `mvn clean install` para instalar as dependências do projeto.
+- Rodar o comando `mvn spring-boot:run` para subir a aplicação ou para debugar a aplicação, 
+  rodar o comando `mvn spring-boot:run -Dspring-boot.run.jvmArguments="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005"`
+  - **Obs.:** Caso esteja usando a DevContainer, a aplicação já estará rodando e o debug já estará configurado.
+  - Para debugar a aplicação, basta clicar no botão de debug do VsCode e selecionar a opção `Attach to Remote JVM`.
+  - Se não tiver a opção `Attach to Remote JVM`, basta clicar no botão de debug do VsCode e selecionar a opção `Add Configuration` e adicionar a seguinte configuração:
+    ```json
+    {
+      "type": "java",
+      "name": "Attach to Remote JVM",
+      "request": "attach",
+      "hostName": "localhost",
+      "port": 5005
+    }
+    ```
+  - **Obs.:** Lembrande que o debug só funcionará se o address for o mesmo que foi configurado no comando de debug.
+- Acessar a documentação da API no endereço `http://localhost:<PORT>/swagger-ui.html`
+  - **Obs.:** O `<PORT>` é a porta que a aplicação está rodando, por padrão é a porta 8080 ou 8082.
+
+

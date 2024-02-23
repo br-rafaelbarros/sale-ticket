@@ -19,6 +19,7 @@ import br.com.rafaelbarros.ticket.commons.PaginationFilter;
 import br.com.rafaelbarros.ticket.controllers.dtos.TicketResponseBody;
 import br.com.rafaelbarros.ticket.domains.dtos.TicketModel;
 import br.com.rafaelbarros.ticket.domains.repositories.TicketRepository;
+import br.com.rafaelbarros.ticket.exceptions.BusinessException;
 
 @ExtendWith(MockitoExtension.class)
 public class TicketServiceTests {
@@ -35,7 +36,7 @@ public class TicketServiceTests {
 
   @DisplayName("Test listAvailable")
   @Test
-  public void givenListAvailableWhenGetThenReturnOk() {
+  public void givenListAvailableWhenGetThenReturnOk() throws InternalError, BusinessException {
 
     doReturn(Pagination.<TicketModel>builder()
         .data(List.of(TicketModel.builder()

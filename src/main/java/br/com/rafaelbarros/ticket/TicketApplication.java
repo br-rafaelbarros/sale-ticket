@@ -1,5 +1,6 @@
 package br.com.rafaelbarros.ticket;
 
+import org.springdoc.core.customizers.OpenApiCustomizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,9 +15,13 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import java.net.URISyntaxException;
-import java.util.Properties;
 
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.servers.Server;
+
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Properties;
 import javax.sql.DataSource;
 
 @SpringBootApplication
@@ -70,4 +75,19 @@ public class TicketApplication {
 		return dataSource;
 	}
 
+	@Bean(name = "openApiCustomiser")
+	public OpenApiCustomizer openApiCustomiser() {
+		return openApi -> extracted(openApi);
+	}
+
+	private void extracted(OpenAPI openApi) {
+		openApi.getInfo().setTitle("Ticket API");
+		openApi.getInfo().setVersion("1.0");
+		openApi.getComponents().getSchemas().values().forEach(schema -> {
+		});
+		openApi.setServers(
+				// put localhos on my machine
+				List.of(new Server().url("http://localhost:8082").description("Local server"),
+						new Server().url("https://api.rafaelbarros.com").description("Production server")));
+	}
 }

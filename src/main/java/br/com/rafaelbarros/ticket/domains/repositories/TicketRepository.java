@@ -6,6 +6,8 @@ import br.com.rafaelbarros.ticket.domains.dtos.TicketModel;
 
 public interface TicketRepository {
 
-  Pagination<TicketModel> listAvailable(PaginationFilter filters);
+  Pagination<TicketModel> listAvailable(PaginationFilter filters) throws InternalError;
+
+  TicketModel getTicketById(Long id);
 
 }

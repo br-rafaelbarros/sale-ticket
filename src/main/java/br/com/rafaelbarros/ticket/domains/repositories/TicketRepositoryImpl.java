@@ -20,32 +20,35 @@ public class TicketRepositoryImpl implements TicketRepository {
   private EntityManager entityManager;
 
   @Override
-  public Pagination<TicketModel> listAvailable(PaginationFilter filters) {
+  public Pagination<TicketModel> listAvailable(PaginationFilter filters) throws InternalError {
+    try {
+      filters = loadCommonFilters(filters);
 
-    filters = loadCommonFilters(filters);
+      Integer totalItems = entityManager.createQuery(
+          "SELECT count (t) FROM tickets t WHERE t.qtyAvailable > 0 AND t.status = 1", Long.class).getSingleResult()
+          .intValue();
 
-    Integer totalItems = entityManager.createQuery(
-        "SELECT count (t) FROM tickets t WHERE t.qtyAvailable > 0 AND t.status = 1", Long.class).getSingleResult()
-        .intValue();
+      String queryScript = " SELECT t FROM tickets t WHERE t.qtyAvailable > 0 AND t.status = 1 "
+          + " ORDER BY t." + filters.getSort() + " " + filters.getSort_order()
+          + " LIMIT " + filters.getSize() + " OFFSET " + ((filters.getPage() - 1) * filters.getSize());
 
-    String queryScript = " SELECT t FROM tickets t WHERE t.qtyAvailable > 0 AND t.status = 1 "
-        + " ORDER BY t." + filters.getSort() + " " + filters.getSort_order()
-        + " LIMIT " + filters.getSize() + " OFFSET " + ((filters.getPage() - 1) * filters.getSize());
+      TypedQuery<Ticket> queryResult = entityManager.createQuery(queryScript, Ticket.class);
 
-    TypedQuery<Ticket> queryResult = entityManager.createQuery(queryScript, Ticket.class);
+      List<TicketModel> ticketModels = new ArrayList<TicketModel>();
+      queryResult.getResultList().forEach(ticket -> {
+        ticketModels.add(TicketModel.builder()
+            .id(ticket.getId())
+            .title(ticket.getTitle())
+            .price(ticket.getPrice())
+            .status(ticket.getStatus())
+            .qtyAvailable(ticket.getQtyAvailable())
+            .build());
+      });
 
-    List<TicketModel> ticketModels = new ArrayList<TicketModel>();
-    queryResult.getResultList().forEach(ticket -> {
-      ticketModels.add(TicketModel.builder()
-          .id(ticket.getId())
-          .title(ticket.getTitle())
-          .price(ticket.getPrice())
-          .status(ticket.getStatus())
-          .qtyAvailable(ticket.getQtyAvailable())
-          .build());
-    });
-
-    return SharedRepository.buildPaginationResult(filters, totalItems, ticketModels);
+      return SharedRepository.buildPaginationResult(filters, totalItems, ticketModels);
+    } catch (Exception e) {
+      throw new InternalError("Erro inesperado ao listar os tickets disponíveis.", e);
+    }
   }
 
   private PaginationFilter loadCommonFilters(PaginationFilter filters) {
@@ -55,6 +58,18 @@ public class TicketRepositoryImpl implements TicketRepository {
         .sort(filters.getSort() == null ? "id" : filters.getSort())
         .sort_order(
             (filters.getSort_order() != null && filters.getSort_order().toLowerCase().equals("desc")) ? "desc" : "asc")
+        .build();
+  }
+
+  @Override
+  public TicketModel getTicketById(Long id) {
+    Ticket ticket = entityManager.find(Ticket.class, id);
+    return TicketModel.builder()
+        .id(ticket.getId())
+        .title(ticket.getTitle())
+        .price(ticket.getPrice())
+        .status(ticket.getStatus())
+        .qtyAvailable(ticket.getQtyAvailable())
         .build();
   }
 }

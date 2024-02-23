@@ -23,6 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import br.com.rafaelbarros.ticket.commons.Pagination;
 import br.com.rafaelbarros.ticket.commons.PaginationFilter;
 import br.com.rafaelbarros.ticket.controllers.dtos.TicketResponseBody;
+import br.com.rafaelbarros.ticket.exceptions.BusinessException;
 import br.com.rafaelbarros.ticket.services.TicketService;
 
 @AutoConfigureMockMvc
@@ -43,9 +44,9 @@ public class TicketControllerTest {
 
   @DisplayName("Test listAvailable")
   @Test
-  public void givenListAvailableWhenGetThenReturnOk() throws Exception {
+  public void givenListAvailableWhenGetThenReturnOk() throws Exception, InternalError, BusinessException {
 
-    doReturn(Pagination.<TicketResponseBody>builder()
+    Pagination<TicketResponseBody> response = Pagination.<TicketResponseBody>builder()
         .data(List.of(TicketResponseBody.builder()
             .id(1L)
             .title("Test")
@@ -56,8 +57,9 @@ public class TicketControllerTest {
         .page(1)
         .size(10)
         .totalPages(1)
-        .build())
-        .when(ticketService).listAvailable(any(PaginationFilter.class));
+        .build();
+
+    doReturn(response).when(ticketService).listAvailable(any(PaginationFilter.class));
 
     mockMvc.perform(get("/v1/tickets"))
         .andExpect(status().isOk());
