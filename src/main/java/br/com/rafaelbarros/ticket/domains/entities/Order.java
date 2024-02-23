@@ -50,4 +50,7 @@ public class Order {
   @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
   private String createdAt;
 
+  @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+  private String updatedAt;
+
 }
