@@ -53,4 +53,7 @@ public class Order {
   @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
   private String updatedAt;
 
+  @Column(name = "external_id", length = 255)
+  private String externalId;
+
 }
