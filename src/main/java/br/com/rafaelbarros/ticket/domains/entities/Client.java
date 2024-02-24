@@ -1,5 +1,6 @@
 package br.com.rafaelbarros.ticket.domains.entities;
 
+import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -37,7 +38,7 @@ public class Client {
   private Integer documentType;
 
   @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-  private String createdAt;
+  private Date createdAt;
 
   @OneToMany(mappedBy = "client")
   private List<Order> orders;

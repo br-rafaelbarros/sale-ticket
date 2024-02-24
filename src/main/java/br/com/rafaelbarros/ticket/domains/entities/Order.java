@@ -1,6 +1,7 @@
 package br.com.rafaelbarros.ticket.domains.entities;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -20,18 +21,18 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "ticket_system.orders")
+@Entity(name = "orders")
 public class Order {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @ManyToOne(cascade = CascadeType.ALL, targetEntity = Client.class, fetch = FetchType.LAZY)
+  @ManyToOne(cascade = CascadeType.DETACH, targetEntity = Client.class, fetch = FetchType.LAZY)
   @JoinColumn(name = "client_id", referencedColumnName = "id", nullable = false)
   private Client client;
 
-  @ManyToOne(cascade = CascadeType.ALL, targetEntity = Ticket.class, fetch = FetchType.LAZY)
+  @ManyToOne(cascade = CascadeType.DETACH, targetEntity = Ticket.class, fetch = FetchType.LAZY)
   @JoinColumn(name = "ticket_id", referencedColumnName = "id", nullable = false)
   private Ticket ticket;
 
@@ -48,10 +49,10 @@ public class Order {
   private String pixEmv;
 
   @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-  private String createdAt;
+  private Date createdAt;
 
   @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-  private String updatedAt;
+  private Date updatedAt;
 
   @Column(name = "external_id", length = 255)
   private String externalId;

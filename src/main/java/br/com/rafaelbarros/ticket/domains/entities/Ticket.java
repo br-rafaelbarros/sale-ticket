@@ -1,6 +1,7 @@
 package br.com.rafaelbarros.ticket.domains.entities;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -38,7 +39,7 @@ public class Ticket {
   private Integer qtyAvailable;
 
   @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-  private String createdAt;
+  private Date createdAt;
 
   @OneToMany(mappedBy = "ticket")
   private List<Order> orders;
