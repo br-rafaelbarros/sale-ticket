@@ -79,5 +79,5 @@ de modo que podemos destacar algumas delas:
   - **Obs.:** Lembrande que o debug só funcionará se o address for o mesmo que foi configurado no comando de debug.
 - Acessar a documentação da API no endereço `http://localhost:<PORT>/swagger-ui.html`
   - **Obs.:** O `<PORT>` é a porta que a aplicação está rodando, por padrão é a porta 8080 ou 8082.
-
+- Para funcionar o envio de email, é necessário configurar as credenciais, no caso deste código, não voi enviado os valores para um arquivo de propriedades, mas em um projeto real, seria enviado para um arquivo de propriedades ou para um serviço de configuração. Altere o arquivo TicketSaleService.java e coloque as credenciais do email que será utilizado para enviar os emails no Bean `JavaMailSenderImpl`.
 
