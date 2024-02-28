@@ -12,6 +12,7 @@ import br.com.rafaelbarros.ticket.controllers.dtos.TicketResponseBody;
 import br.com.rafaelbarros.ticket.domains.dtos.OrderModel;
 import br.com.rafaelbarros.ticket.domains.repositories.OrderRepository;
 import br.com.rafaelbarros.ticket.exceptions.BusinessException;
+import br.com.rafaelbarros.ticket.messages.OrderProducer;
 
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,9 @@ public class OrderServiceImpl implements OrderService {
 
   @Autowired
   private MailService mailService;
+
+  @Autowired
+  private OrderProducer orderProducer;
 
   @Override
   public OrderPaymentPixResponseBody generatePaymentOrder(
@@ -88,6 +92,21 @@ public class OrderServiceImpl implements OrderService {
         .urlLink("https://pix.example.com/pix/" + order.getExternalId())
         .build();
 
+  }
+
+  @Override
+  public void paymentConfirmation(int orderID) throws BusinessException, InternalError {
+    OrderModel order = orderRepository.getOrder(orderID);
+    if (order.getStatus() != 1) {
+      throw new BusinessException("Order already paid");
+    }
+    String message = String.valueOf(orderID);
+    try {
+      orderProducer.sendMessage("topicTicketPayment", message);
+    } catch (Exception e) {
+      System.out.println("Error to send message to payment topic: " + e.getMessage());
+      throw new InternalError("Error to send message to payment topic");
+    }
   }
 
 }

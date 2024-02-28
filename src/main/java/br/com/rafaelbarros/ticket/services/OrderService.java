@@ -10,4 +10,6 @@ public interface OrderService {
 
   OrderPaymentPixResponseBody getPaymentOrder(int orderID) throws BusinessException, InternalError;
 
+  void paymentConfirmation(int orderID) throws BusinessException, InternalError;
+
 }

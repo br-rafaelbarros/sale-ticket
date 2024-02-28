@@ -80,4 +80,19 @@ public class OrderController {
     }
   }
 
+  @Operation(summary = "Payment confirmation", description = "Simulate the payment confirmation")
+  @GetMapping("/payment-confirmation")
+  public ResponseEntity<String> paymentConfirmation(
+      @RequestParam(required = false, defaultValue = "1") final int orderID) throws Throwable {
+    try {
+      service.paymentConfirmation(orderID);
+      return ResponseEntity.ok("Pagamento confirmado com sucesso");
+    } catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+          .body("Falha inesperada no sistema tente novamente mais tarde ou entre em contato com o suporte.");
+    } catch (BusinessException | InternalError e) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+  }
+
 }
