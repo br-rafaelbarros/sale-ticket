@@ -1,83 +1,64 @@
 # Sale ticket
 
+## Índice
+- [Descrição](#descrição)
+- [Definições do projeto](#definições-do-projeto)
+- [Executando o projeto](#executando-o-projeto)
+- [Verificando](#verificando)
+- [Pontos que podem ser observados no código para avaliação](#pontos-que-podem-ser-observados-no-código-para-avaliação)
+- [Considerações finais](#considerações-finais)
+
 ## Descrição
 Este é um projeto demonstração de um sistema de venda de ingressos, o intuito é simular o fluxo básico de venda de ingressos para servir como portfólio para avaliação de conhecimentos de backend e arquitetura de software.
-Durante este projeto, será utilizado alguns conhecimentos adquiridos durante o tempo de experiência profissional, este Readme será atualizado conforme o andamento do projeto com documentação e informações relevantes para o entendimento do projeto e avaliação do mesmo.
+Durante este projeto, será utilizado alguns conhecimentos adquiridos durante o tempo de experiência profissional, este ``Readme`` será atualizado conforme o andamento do projeto com documentação e informações relevantes para o entendimento do projeto e avaliação do mesmo.
 
-## Funcionalidades
-- Mostrar os ingressos disponíveis.
-- Gerar um dado de pagamento (PIX), para simular o pagamento dos ingressos.
-- Enviar o dado de pagamento para o email do usuário.
-- Mostrar os ingressos comprados pelo usuário e seus respectivos status.
+## Definições do projeto
+Com proposíto de levantar pontos importantes para o entendimento do projeto, apenas com a breve descrição acima, foram levantados as informações acessando o [documento de definições](./docs/definitions.md).
 
-## Definições com base nas funcionalidades descritas
-- **Fluxo principal:**
-  A partir da descrição das funcionalidades, foi desenvolvido um diagrama de sequência para representar o fluxo principal do sistema e pode ser encontrado clicando [aqui](./docs/sequence-diagram.md).
+Caso queira visualizar especificaçoes por t'opico, clique nos links abaixo:
 
-- **Banco de dados:**
-  Por se tratar se um fluxo simples e como demonstração não foi levantado muitas hipóteses de uso para melhor definir o banco de dados, o formato do banco de dados foi o relacional, para facilitar o entendimento da solução aplicada.
-  > 📝 ***Obs.: Pelo mesmo motivo de ser um projeto de demonstração, não foi aplicado as melhores práticas de modelagem de banco de dados, como normalização e otimização de queries já que o foco é a demonstração do fluxo principal.***
-  
-  A solução de banco de dados pode ser encontrada clicando [aqui](./docs/database.md).
+- [Funcionalidades](./docs/definitions.md#funcionalidades)
+- [Fluxo principal](./docs/definitions.md#fluxo-principal)
+- [Banco de dados](./docs/definitions.md#banco-de-dados)
+- [Arquitetura](./docs/definitions.md#arquitetura)
+- [Tecnologias](./docs/definitions.md#tecnologias)
 
-- **Arquitetura:**
-  Sobre a a arquitetura, foi definida uma arquitetura relativamente simples mas bem divida em camadas, pois já conseguiremos com esse desenho separar as responsabilidades e facilitar a manutenção e evolução do sistema.
-  > 📝 ***Obs.: Apesar de já saber que se fosse aplicar uma solução em um projeto real, deveria ser aplicado algumas medidas de segurança tando na base quanto na arquitetura como idempotência, rate limit, autenticação e autorização entre outros pontos que devem ser avaliado para o cenário, mas como o projeto é para fins de portifólio e didatico não nos preocuparemos com isso.***
-
-  O desenho da arquitetura pode ser encontrado clicando [aqui](./docs/architecture.md).
-
-- **Tecnologias**
-  As tecnologias utilizadas para o desenvolvimento do projeto forma escolhidas para demonstrar conhecimentos em tecnologias atuais e que estão em alta no mercado.
-de modo que podemos destacar algumas delas:
-  - **Linguagem de programação:** Java 17
-  - **Framework:** Spring Boot
-  - **Banco de dados:** PostgreSQL
-  - **Orquestrador de fila:** Apache Kafka
-  - **Gateway de pagamento:** Nenhum, será mockado na camada de serviço externo.
-  - **Email provider:** Nenhum, será mockado na camada de serviço externo.
-  
-  Além dessas tecnologias, estaremos utilizando outras ferramentas para facilitar o desenvolvimento e testes, como por exemplo, Docker, Docker Compose, Testcontainers, Junit, Mockito, entre outros, Lombok etc.
 
 ## Executando o projeto
 
-### Requisitos
-- Instalar o [Docker](https://docs.docker.com/get-docker/)
-- Instalar o [Docker Compose](https://docs.docker.com/compose/install/)
-- Se estiver usando o VsCode, instalar a DevContainer para facilitar o desenvolvimento ou
-- Instalar o [Java 17](https://www.oracle.com/java/technologies/javase-jdk17-downloads.html)
-- Instalar o [Maven](https://maven.apache.org/download.cgi)
-- Instalar o [PostgreSQL](https://www.postgresql.org/download/)
-- Instalar o [Apache Kafka](https://kafka.apache.org/downloads)
+Para executar o projeto, podemos ter algumas opções de configurações, tudo rodando no docker ou rodando na máquina local. Neste tutorial vamos abordar a execução do projeto rodando no docker. De qualquer forma aqui vai as ferramentas necessárias para rodar o projeto independente da forma que escolher.
 
-### Executando o projeto
-- Rodar o comando `docker-compose up` na raiz do projeto para subir o banco de dados, orquestrador de fila e outras ferramentas necessárias para o desenvolvimento.
-- Se estiver usando o VsCode, digittar command + shift + p e selecionar a opção `Remote-Containers: Reopen in Container` para abrir o projeto na DevContainer.
+- Para verificar as ferramentas necessárias para rodar o projeto, clique [aqui](./docs/run-project.md#ferramentas).
 
-- Verificando se o banco de dados está rodando, acessar o banco de dados com as seguintes credenciais:
-  - **Host:** localhost
-  - **Port:** 5432
-  - **User:** postgres
-  - **Password:** postgres
-- Verificando se o orquestrador de fila está rodando, acessar o orquestrador de fila com as seguintes credenciais:
-  - **URL:** localhost:9021
+- Para rodar o projeto, clique [aqui](./docs/run-project.md#rodando-o-projeto).
 
-- Rodar o comando `mvn clean install` para instalar as dependências do projeto.
-- Rodar o comando `mvn spring-boot:run` para subir a aplicação ou para debugar a aplicação, 
-  rodar o comando `mvn spring-boot:run -Dspring-boot.run.jvmArguments="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005"`
-  - **Obs.:** Caso esteja usando a DevContainer, a aplicação já estará rodando e o debug já estará configurado.
-  - Para debugar a aplicação, basta clicar no botão de debug do VsCode e selecionar a opção `Attach to Remote JVM`.
-  - Se não tiver a opção `Attach to Remote JVM`, basta clicar no botão de debug do VsCode e selecionar a opção `Add Configuration` e adicionar a seguinte configuração:
-    ```json
-    {
-      "type": "java",
-      "name": "Attach to Remote JVM",
-      "request": "attach",
-      "hostName": "localhost",
-      "port": 5005
-    }
-    ```
-  - **Obs.:** Lembrande que o debug só funcionará se o address for o mesmo que foi configurado no comando de debug.
-- Acessar a documentação da API no endereço `http://localhost:<PORT>/swagger-ui.html`
-  - **Obs.:** O `<PORT>` é a porta que a aplicação está rodando, por padrão é a porta 8080 ou 8082.
-- Para funcionar o envio de email, é necessário configurar as credenciais, no caso deste código, não voi enviado os valores para um arquivo de propriedades, mas em um projeto real, seria enviado para um arquivo de propriedades ou para um serviço de configuração. Altere o arquivo TicketSaleService.java e coloque as credenciais do email que será utilizado para enviar os emails no Bean `JavaMailSenderImpl`.
+## Verificando
+
+Para verificar se esta tudo rodando corretamente, siga os passos no link [aqui](./docs/run-project.md#verificando).
+
+Se estiver tudo rodando corretamente, acesse a documentação da API no endereço `http://localhost:<PORT>/swagger-ui.html`, onde `<PORT>` é a porta que a aplicação está rodando, por padrão é a porta 8080 ou 8082.
+
+> 📝 **Obs.:** Esta documentação pode também ser usada para testes fique á vontade para validar!
+
+## Pontos que podem ser observados no código para avaliação
+- Padrões de projetos:
+  - Foi utilizado neste projeto conceitos como DDD, SOLID, Clean Code entre outros.
+- Testes:
+  - Foram aplicados exemplos básicos de testes unitários somente como demonstração.
+- Design do sistema:
+  - A arquitetura foi pensada para ser escalável e de fácil manutenção, sendo assim foi separada em camadas mas não aplicado muitos padroes de projeto que poderiam ser aplicados mas neste caso poderia ser um overengineering para uma simples demonstração, padrões estes como Chain of Responsability, Builder, mas foram aplicados conceitos como Factory, Proxy, Repository.
+- Versionamento:
+  - Foi aplicado commit semântico para versionamento do código.
+  - As entregas (commits) foram feitas separadamente por segregação de tarefas.
+  
+** Além dos pontos elicitados acima, outros pontos podem ser observados no código, fique a vontade para explorar o código e verificar outros pontos que podem ser relevantes para avaliação.
+Também foi gasto um tempo para documentar o código, tando no contrato da API quanto nas definicões do projeto, então fique a vontade para explorar a documentação e verificar a qualidade da documentação.
+
+# Considerações finais
+Acredito que este projeto tenha alguns dos conhecimentos adquiridos durante o tempo de experiência profissional, com certeza não todos, mas acredito que este projeto possa ser um bom exemplo para avaliação de conhecimentos de backend e arquitetura de software.
+Agredeço a oportunidade de avaliação e estou a disposição para esclarecer qualquer dúvida que possa surgir durante a avaliação.
+
+
+
+
 

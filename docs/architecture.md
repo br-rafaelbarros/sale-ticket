@@ -1,9 +1,9 @@
 # Architecture - [(Voltar ao README)](../README.md)
 
 Este diagrama de arquitetura representa a estrutura do sistema de venda de ingressos. 
-Como podem observer existem 2 pontos de comunicação externa do projeto:
-- repository: Representa a comunicação com o banco de dados, podendo ele ser na mesma infra ou em uma externa.
-- adapter: Representa a comunicação com sistemas externos, como por exemplo, um gateway de pagamento, e comunicação com o orquestrador de fila.
+Como podem observar existem 2 pontos de comunicação externa do projeto:
+- Repository: Representa a comunicação com o banco de dados, podendo ele ser na mesma infra ou em uma externa.
+- Adapter: Representa a comunicação com sistemas externos, como por exemplo, um gateway de pagamento, e comunicação com o orquestrador de fila.
 Podemos verificar que apesar de apenas 1 entrada de comunicação, podemos distinguir em 2 formatos:
 - API: Representa a comunicação com o cliente, seja ele um usuário final ou um sistema externo.
 - Hook: Representa a comunicação com sistemas externos, como por exemplo, um gateway de pagamento, e comunicação com o orquestrador de fila.
